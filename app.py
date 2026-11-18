@@ -135,6 +135,10 @@ def handle_message(user_id, text):
         replies.append(kb["offices"][lang])
         return replies
 
+    if text_lower in ["organization", "org", "management", "leadership", "about", "about zhrc", "info"]:
+        replies.append(kb.get("organization", {}).get(lang, kb["services"][lang]))
+        return replies
+
     if text_lower in ["emergency", "ngozi", "iphuthumayo", "urgent", "danger"]:
         replies.append(kb["emergency"][lang])
         return replies
@@ -149,7 +153,8 @@ def handle_message(user_id, text):
 
     # Generative AI response for open-ended questions
     context = (kb["rights"][lang] + "\n\n" + kb["services"][lang] + "\n\n" + kb["complaint"][lang]
-              + "\n\n" + kb["offices"][lang] + "\n\n" + kb["faq"][lang])
+              + "\n\n" + kb["offices"][lang] + "\n\n" + kb["faq"][lang]
+              + "\n\n" + kb.get("organization", {}).get(lang, ""))
     history = chat_history.get(user_id, [])
     history_text = ""
     for h in history[-3:]:
