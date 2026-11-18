@@ -1,4 +1,5 @@
 import json, os, time, threading
+from datetime import datetime, timezone, timedelta
 from flask import Flask, request, render_template_string
 import requests
 from dotenv import load_dotenv
@@ -28,7 +29,7 @@ RULES:
 3. If unsure, say so and suggest contacting ZHRC directly
 4. For emergencies, always provide emergency numbers (Police: 999)
 5. Keep responses concise but informative
-6. Support English, Shona, and Ndebele
+6. Auto-detect the user language and respond in the same language (English, Shona, or Ndebele)
 7. If asked about non-human-rights topics, politely redirect to human rights topics
 8. Never provide legal advice - always recommend consulting ZHRC or a lawyer
 9. Include relevant contact info when appropriate
@@ -41,6 +42,16 @@ chat_history = {}
 def load_kb():
     with open(AD_FILE, 'r', encoding='utf-8') as f:
         return json.load(f)
+
+def get_time_greeting():
+    tz = timezone(timedelta(hours=2))
+    hour = datetime.now(tz).hour
+    if hour < 12:
+        return "Good morning"
+    elif hour < 17:
+        return "Good afternoon"
+    else:
+        return "Good evening"
 
 def get_lang(user_id):
     return user_lang.get(user_id, "en")
@@ -97,7 +108,8 @@ def handle_message(user_id, text):
 
     # Greeting
     if text_lower in ["hie", "hi", "hello", "hey", "mhoro", "sawubona", "greetings", "howzit"]:
-        replies.append(kb["greeting"][lang])
+        time_greet = get_time_greeting()
+        replies.append(time_greet + "! I am ZHRCBOT. How can I help you today?")
         return replies
 
     # Structured commands (quick access)
@@ -144,7 +156,7 @@ Previous conversation:
 
 User question: {text}
 
-Respond in {LANG_NAMES[lang]}. Be helpful, accurate, and concise. If the question is not about human rights, politely redirect. Include relevant contact info when appropriate."""
+Detect the language of the user question and respond in that same language (English, Shona, or Ndebele). Be helpful, accurate, and concise. If the question is not about human rights, politely redirect. Include relevant contact info when appropriate."""
 
     reply = call_gemini(prompt)
     if reply:
@@ -210,26 +222,17 @@ CHAT_HTML = r'''<!DOCTYPE html>
   <div class="chat-header">
     <div class="avatar">⚖️</div>
     <div class="info">
-      <h3>ZHRCHumanRightsBot <span class="ai-badge">AI</span></h3>
-      <p>Zimbabwe Human Rights Commission • Powered by AI</p>
+      <h3>ZHRCBOT</h3>
+      <p>Zimbabwe Human Rights Commission</p>
     </div>
   </div>
   <div class="chat-messages" id="messages"></div>
-  <div class="quick-btns">
-    <button onclick="sendQuick('rights')">Rights</button>
-    <button onclick="sendQuick('complaint')">Complaint</button>
-    <button onclick="sendQuick('services')">Services</button>
-    <button onclick="sendQuick('offices')">Offices</button>
-    <button onclick="sendQuick('emergency')">Emergency</button>
-    <button onclick="sendQuick('documents')">Documents</button>
-    <button onclick="sendQuick('faq')">FAQ</button>
-    <button onclick="sendQuick('language')">Language</button>
-  </div>
+
   <div class="chat-input">
     <input type="text" id="input" placeholder="Ask anything about human rights..." onkeypress="if(event.key==='Enter')sendMessage()" autofocus>
     <button onclick="sendMessage()">➤</button>
   </div>
-  <div class="footer">Zimbabwe Human Rights Commission — IT Department • AI-Powered</div>
+  <div class="footer">Zimbabwe Human Rights Commission</div>
 </div>
 <script>
   const userId = "web_user_" + Math.random().toString(36).substr(2, 9);
@@ -254,7 +257,7 @@ CHAT_HTML = r'''<!DOCTYPE html>
     input.value = '';
     const typing = document.createElement('div');
     typing.className = 'typing';
-    typing.textContent = 'ZHRC AI is thinking...';
+    typing.textContent = 'ZHRCBOT is thinking...';
     messagesDiv.appendChild(typing);
     messagesDiv.scrollTop = messagesDiv.scrollHeight;
 
@@ -281,7 +284,7 @@ CHAT_HTML = r'''<!DOCTYPE html>
   }
 
   setTimeout(() => {
-    addMsg("Hie! I am ZHRCHumanRightsBot, your AI-powered Zimbabwe Human Rights Commission assistant. 🤖\n\nI can answer any question about human rights in Zimbabwe! Try asking:\n• 'What are my rights as a worker?'\n• 'How do I file a complaint?'\n• 'What does ZHRC do?'\n• 'Where is the nearest office?'\n\nOr use the quick buttons below. Type 'language' to switch to Shona or Ndebele.", false);
+    addMsg("Hie! I am ZHRCBOT. How can I help you today?", false);
   }, 500);
 </script>
 </body>
