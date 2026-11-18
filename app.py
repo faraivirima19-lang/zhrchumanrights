@@ -18,14 +18,15 @@ GEMINI_URL = f"https://generativelanguage.googleapis.com/v1beta/models/{GEMINI_M
 SYSTEM_PROMPT = """You are ZHRCHumanRightsBot, the official AI assistant of the Zimbabwe Human Rights Commission (ZHRC).
 You answer questions related to:
 - Human rights (universal, Zimbabwe Constitution Chapter 4 Bill of Rights)
-- ZHRC services, offices, management, and procedures
+- ZHRC services, offices, management, leadership, and organizational structure
 - How to file complaints
 - Zimbabwean law related to human rights
 - Emergency contacts and support services
-- ZHRC leadership and organizational structure
 - ZHRC programs, projects, and initiatives
-- International human rights frameworks
+- International human rights frameworks (UN, AU, SADC)
+- Rights of specific groups (women, children, workers, disabled, refugees)
 - Any general knowledge about human rights, governance, and social justice
+- ZHRC history, mandate, and constitutional basis (Section 242)
 
 RULES:
 1. Be helpful, accurate, and empathetic
@@ -154,7 +155,9 @@ def handle_message(user_id, text):
     # Generative AI response for open-ended questions
     context = (kb["rights"][lang] + "\n\n" + kb["services"][lang] + "\n\n" + kb["complaint"][lang]
               + "\n\n" + kb["offices"][lang] + "\n\n" + kb["faq"][lang]
-              + "\n\n" + kb.get("organization", {}).get(lang, ""))
+              + "\n\n" + kb.get("organization", {}).get(lang, "")
+              + "\n\n" + kb.get("detailed_rights", {}).get(lang, "")
+              + "\n\n" + kb.get("management", {}).get(lang, ""))
     history = chat_history.get(user_id, [])
     history_text = ""
     for h in history[-3:]:
