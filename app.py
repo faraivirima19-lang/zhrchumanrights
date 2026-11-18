@@ -206,27 +206,27 @@ CHAT_HTML = r'''<!DOCTYPE html>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'Segoe UI', Arial, sans-serif; background: linear-gradient(135deg, #1a3a2e 0%, #0f5132 50%, #198754 100%); display: flex; justify-content: center; align-items: center; height: 100vh; }
   .chat-container { width: 480px; max-width: 100%; height: 95vh; background: #fff; border-radius: 16px; box-shadow: 0 8px 32px rgba(0,0,0,0.3); display: flex; flex-direction: column; overflow: hidden; }
-  .chat-header { background: linear-gradient(135deg, #198754, #157347); color: #fff; padding: 18px 20px; display: flex; align-items: center; gap: 14px; }
-  .chat-header .avatar { width: 48px; height: 48px; border-radius: 50%; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 24px; border: 2px solid rgba(255,255,255,0.3); }
+  .chat-header { background: linear-gradient(135deg, #1B5E20, #2E7D32); color: #fff; padding: 18px 20px; display: flex; align-items: center; gap: 14px; }
+  .chat-header .avatar { width: 48px; height: 48px; border-radius: 50%; background: rgba(201,162,39,0.25); display: flex; align-items: center; justify-content: center; font-size: 24px; border: 2px solid rgba(201,162,39,0.5); }
   .chat-header .info h3 { font-size: 18px; font-weight: 600; }
   .chat-header .info p { font-size: 12px; opacity: 0.85; margin-top: 2px; }
-  .chat-messages { flex: 1; padding: 20px; overflow-y: auto; background: #f0f5f0; display: flex; flex-direction: column; gap: 10px; }
+  .chat-messages { flex: 1; padding: 20px; overflow-y: auto; background: #f5f0e8; display: flex; flex-direction: column; gap: 10px; }
   .msg { max-width: 90%; padding: 12px 16px; border-radius: 12px; font-size: 14px; line-height: 1.6; white-space: pre-wrap; word-wrap: break-word; animation: fadeIn 0.2s ease; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-  .msg.user { align-self: flex-end; background: #d1e7dd; border-bottom-right-radius: 4px; }
+  .msg.user { align-self: flex-end; background: #e8f0e8; border-bottom-right-radius: 4px; }
   .msg.bot { align-self: flex-start; background: #fff; border-bottom-left-radius: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
-  .msg a { color: #198754; text-decoration: none; font-weight: 600; }
+  .msg a { color: #1B5E20; text-decoration: none; font-weight: 600; }
   .chat-input { display: flex; padding: 12px 16px; background: #fff; gap: 10px; border-top: 1px solid #e0e0e0; }
   .chat-input input { flex: 1; padding: 12px 18px; border: 2px solid #e0e0e0; border-radius: 24px; font-size: 14px; outline: none; transition: border-color 0.2s; }
-  .chat-input input:focus { border-color: #198754; }
-  .chat-input button { background: linear-gradient(135deg, #198754, #157347); color: #fff; border: none; border-radius: 50%; width: 44px; height: 44px; cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center; transition: transform 0.1s; }
+  .chat-input input:focus { border-color: #1B5E20; }
+  .chat-input button { background: linear-gradient(135deg, #1B5E20, #2E7D32); color: #fff; border: none; border-radius: 50%; width: 44px; height: 44px; cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center; transition: transform 0.1s; }
   .chat-input button:hover { transform: scale(1.05); }
   .typing { align-self: flex-start; background: #fff; padding: 12px 16px; border-radius: 12px; font-size: 12px; color: #888; font-style: italic; border-bottom-left-radius: 4px; }
-  .footer { text-align: center; padding: 6px; font-size: 10px; color: #999; background: #f0f5f0; }
-  .quick-btns { display: flex; gap: 6px; padding: 8px 12px; background: #f0f5f0; flex-wrap: wrap; justify-content: center; }
+  .footer { text-align: center; padding: 6px; font-size: 10px; color: #999; background: #f5f0e8; }
+  .quick-btns { display: flex; gap: 6px; padding: 8px 12px; background: #f5f0e8; flex-wrap: wrap; justify-content: center; }
   .quick-btns button { background: #fff; border: 1px solid #ccc; border-radius: 16px; padding: 6px 12px; font-size: 12px; cursor: pointer; transition: background 0.2s; }
-  .quick-btns button:hover { background: #d1e7dd; }
-  .ai-badge { display: inline-block; background: #198754; color: #fff; font-size: 10px; padding: 2px 8px; border-radius: 10px; margin-left: 8px; }
+  .quick-btns button:hover { background: #e8f0e8; }
+  .ai-badge { display: inline-block; background: #C9A227; color: #fff; font-size: 10px; padding: 2px 8px; border-radius: 10px; margin-left: 8px; }
 </style>
 </head>
 <body>
